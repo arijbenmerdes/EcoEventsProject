@@ -14,5 +14,8 @@ Route::get('/', function () {
 Route::get('/dashboard/home', function () {
     return view('dashboard.pages.dashboard');
 });
-
+Route::resource('campaigns', CampaignController::class);
+Route::resource('targets', TargetController::class);
+Route::patch('/targets/{id}/toggle-activation', [TargetController::class, 'toggleActivation'])
+     ->name('targets.toggle-activation');
 

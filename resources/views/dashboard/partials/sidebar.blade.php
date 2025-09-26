@@ -38,10 +38,10 @@
       <div class="collapse {{ request()->routeIs('campaigns.*', 'targets.*') ? 'show' : '' }}" id="campaigns-menu">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item {{ request()->routeIs('campaigns.*') && !request()->routeIs('targets.*') ? 'active' : '' }}">
-            <a class="nav-link" href="">Campagnes</a>
+            <a class="nav-link" href="{{ route('campaigns.index') }}">Campagnes</a>
           </li>
           <li class="nav-item {{ request()->routeIs('targets.*') ? 'active' : '' }}">
-            <a class="nav-link" href="">Cibles</a>
+            <a class="nav-link" href="{{ route('targets.index') }}">Cibles</a>
           </li>
         </ul>
       </div>
