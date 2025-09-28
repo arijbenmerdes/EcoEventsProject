@@ -13,7 +13,10 @@ Route::get('/', function () {
 });
 Route::get('/dashboard/home', function () {
     return view('dashboard.pages.dashboard');
-});
+})->name('dashboard');
+Route::get('/landing/home', function () {
+    return view('landing.pages.home');
+})->name('landing');
 Route::resource('campaigns', CampaignController::class);
 Route::resource('targets', TargetController::class);
 Route::patch('/targets/{id}/toggle-activation', [TargetController::class, 'toggleActivation'])

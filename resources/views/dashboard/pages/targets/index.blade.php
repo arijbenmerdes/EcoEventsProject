@@ -88,7 +88,7 @@
                                         <span class="badge badge-primary">{{ $target->campaigns_count }}</span>
                                     </td>
                                     <td>
-                                        <span class="badge {{ $target->est_actif ? 'badge-success' : 'badge-danger' }}">
+                                        <span class="badge {{ $target->est_actif ? 'badge-info' : 'badge-danger' }}">
                                             {{ $target->est_actif ? 'Actif' : 'Inactif' }}
                                         </span>
                                     </td>
@@ -114,9 +114,7 @@
                                               method="POST" class="d-inline">
                                             @csrf
                                             @method('PATCH')
-                                            <button type="submit" class="btn btn-sm {{ $target->est_actif ? 'btn-warning' : 'btn-success' }}"
-                                                    title="{{ $target->est_actif ? 'Désactiver' : 'Activer' }}">
-                                                <i class="mdi {{ $target->est_actif ? 'mdi-toggle-switch-off' : 'mdi-toggle-switch' }}"></i>
+<button type="submit" class="btn btn-sm {{ $target->est_actif ? 'btn-warning' : 'btn-gradient-primary' }}">                                                <i class="mdi {{ $target->est_actif ? 'mdi-toggle-switch-off' : 'mdi-toggle-switch' }}"></i>
                                             </button>
                                         </form>
 

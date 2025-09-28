@@ -18,7 +18,7 @@
 
     <!-- Tableau de bord -->
     <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-      <a class="nav-link" href="">
+      <a class="nav-link" href="{{route('dashboard')}}">
         <span class="menu-title">Tableau de bord</span>
         <i class="mdi mdi-view-dashboard menu-icon"></i>
       </a>
@@ -45,6 +45,11 @@
           </li>
         </ul>
       </div>
+    </li>
+     <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+      <a class="nav-link" href="{{ route('landing') }}">
+        <span class="menu-title">Home</span>
+<i class="mdi mdi-home-variant menu-icon"></i>      </a>
     </li>
 
     <!-- Déconnexion -->
