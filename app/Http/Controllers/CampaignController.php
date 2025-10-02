@@ -27,6 +27,34 @@ class CampaignController extends Controller
         'targets'
     ));
     }
+    public function frontcampaigns(Request $request)
+    {
+        $query = Campaign::with('targets')
+->whereIn('status', [Campaign::STATUS_ACTIVE, Campaign::STATUS_DRAFT]);
+        // Filtres
+        if ($request->has('type') && $request->type) {
+            $query->where('type', $request->type);
+        }
+
+        if ($request->has('ecological_focus') && $request->ecological_focus) {
+            $query->where('ecological_focus', $request->ecological_focus);
+        }
+
+        if ($request->has('status') && $request->status === 'upcoming') {
+            $query->where('start_date', '>', now());
+        } elseif ($request->has('status') && $request->status === 'active') {
+            $query->where('start_date', '<=', now())
+                  ->where(function($q) {
+                      $q->whereNull('end_date')
+                        ->orWhere('end_date', '>=', now());
+                  });
+        }
+
+        $campaigns = $query->orderBy('start_date', 'desc')
+                          ->paginate(9);
+
+        return view('landing.pages.campaigns', compact('campaigns'));
+    }
 
     public function create()
     {
@@ -39,7 +67,12 @@ class CampaignController extends Controller
             'statuses' => Campaign::getStatuses()
         ]);
     }
+public function showShareExperience($id)
+{
+    $campagne = Campaign::with('targets')->findOrFail($id);
 
+    return view('landing.pages.partager-experience', compact('campagne'));
+}
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -89,7 +122,6 @@ class CampaignController extends Controller
     {
        $campaigns = Campaign::withCount('targets')->latest()->paginate(10);
 
-        // Ajoutez ces variables
         $types = Campaign::getTypes();
         $ecologicalFocuses = Campaign::getEcologicalFocuses();
         $statuses = Campaign::getStatuses();

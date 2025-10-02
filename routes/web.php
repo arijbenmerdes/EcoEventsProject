@@ -8,10 +8,10 @@ use App\Models\Campaign;
 use App\Models\Target;
 use Illuminate\Support\Facades\Route;
 
+
+
+
 Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/dashboard/home', function () {
     return view('dashboard.pages.dashboard');
 })->name('dashboard');
 Route::get('/landing/home', function () {
@@ -21,4 +21,5 @@ Route::resource('campaigns', CampaignController::class);
 Route::resource('targets', TargetController::class);
 Route::patch('/targets/{id}/toggle-activation', [TargetController::class, 'toggleActivation'])
      ->name('targets.toggle-activation');
-
+Route::get('/campagnes', [App\Http\Controllers\CampaignController::class, 'frontcampaigns'])->name('campagnes.front');
+Route::get('/campagnes/{id}/partager', [App\Http\Controllers\CampaignController::class, 'showShareExperience'])->name('campagnes.share');
