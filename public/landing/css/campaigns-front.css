@@ -1,0 +1,577 @@
+/* resources/css/campaigns-front.css */
+/* Hero Section Écologique */
+.ecological-hero {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+ background:
+        url("https://circulareconomynetwork.it/wp-content/uploads/2021/02/kids-hands-holding-plants.jpg");
+        background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.hero-stats .stat-item {
+    padding: 0 20px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+.animate-fade-in { animation: fadeIn 1s ease-out; }
+.animate-slide-up { animation: slideUp 1s ease-out 0.3s both; }
+.animate-bounce { animation: bounce 2s infinite; }
+
+/* Filtres Sticky */
+.filter-section {
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+/* Cartes de Campagnes Avancées */
+.campaign-card-advanced {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+.campaign-card-advanced:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+
+.campaign-image-container {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.campaign-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.campaign-card-advanced:hover .campaign-image {
+    transform: scale(1.1);
+}
+
+.image-gradient-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+}
+
+.floating-badges {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.floating-badges .badge {
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 15px;
+}
+
+.type-badge {
+    background: rgba(13, 110, 253, 0.9) !important;
+    color: white;
+}
+
+.focus-badge {
+    background: rgba(25, 135, 84, 0.9) !important;
+    color: white;
+}
+
+.status-indicator {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.status-badge {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.status-badge.live {
+    background: rgba(220, 53, 69, 0.9);
+    color: white;
+}
+
+.status-badge.upcoming {
+    background: rgba(13, 202, 240, 0.9);
+    color: white;
+}
+
+.status-badge.draft {
+    background: rgba(108, 117, 125, 0.9);
+    color: white;
+}
+
+/* Corps de la carte avec scroll */
+.campaign-body {
+    padding: 20px;
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.campaign-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0;
+    color: #1a1a1a;
+    line-height: 1.3;
+}
+
+.campaign-title a {
+    color: inherit;
+    transition: color 0.3s ease;
+}
+
+.campaign-title a:hover {
+    color: #0d6efd;
+}
+
+/* Sections détaillées */
+.section-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 8px;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.section-title i {
+    margin-right: 8px;
+    font-size: 0.8rem;
+}
+
+.campaign-description-full,
+.campaign-objective-full {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 10px;
+    border-left: 4px solid #0d6efd;
+}
+
+.campaign-objective-full {
+    border-left-color: #198754;
+}
+
+.description-text,
+.objective-text {
+    color: #495057;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Grille de détails */
+.campaign-details-grid {
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    padding: 6px 0;
+}
+
+.detail-item i {
+    font-size: 1rem;
+    width: 20px;
+    color: #6c757d;
+}
+
+.detail-item div {
+    flex-grow: 1;
+}
+
+/* Budget détaillé */
+.budget-detail {
+    background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ffeaa7;
+    text-align: center;
+}
+
+.budget-amount {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Localisation détaillée */
+.location-detail {
+    background: #f8d7da;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #f5c6cb;
+}
+
+.location-text {
+    font-weight: 600;
+    color: #721c24;
+}
+
+/* Statut détaillé */
+.status-detail {
+    background: #d1ecf1;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #bee5eb;
+}
+
+.status-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: center;
+}
+
+/* Cibles complètes */
+.campaign-targets-full {
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.targets-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.target-card {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.target-card:hover {
+    background: #e9ecef;
+    transform: translateX(3px);
+}
+
+.target-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.target-name {
+    font-weight: 600;
+    color: #495057;
+    font-size: 0.85rem;
+    flex-grow: 1;
+}
+
+.target-type-badge {
+    background: #6f42c1;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 0.65rem;
+}
+
+.target-details {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+}
+
+.target-details small {
+    font-size: 0.75rem;
+}
+
+.target-description {
+    color: #6c757d;
+    font-style: italic;
+    font-size: 0.75rem;
+}
+
+/* Métriques avancées */
+.advanced-metrics {
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.metric-advanced {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.metric-advanced:hover {
+    border-color: #0d6efd;
+    transform: translateY(-2px);
+}
+
+.metric-icon {
+    font-size: 1.2rem;
+    margin-right: 8px;
+    opacity: 0.8;
+}
+
+.metric-content {
+    flex-grow: 1;
+}
+
+.metric-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1;
+}
+
+.metric-label {
+    font-size: 0.65rem;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Footer de la carte */
+.campaign-footer {
+    padding: 15px 20px;
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    flex-shrink: 0;
+}
+
+.campaign-meta-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.campaign-meta-info small {
+    font-size: 0.75rem;
+}
+
+.participate-btn, .details-btn {
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.participate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(25, 135, 84, 0.3);
+}
+
+/* État vide */
+.empty-state-advanced {
+    padding: 80px 20px;
+}
+
+.empty-icon {
+    opacity: 0.5;
+}
+
+/* Section CTA */
+.cta-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.cta-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* Scrollbar personnalisée */
+.campaign-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.campaign-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.campaign-body::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.campaign-body::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+.targets-grid::-webkit-scrollbar {
+    width: 4px;
+}
+
+.targets-grid::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 2px;
+}
+
+.targets-grid::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 2px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .campaign-card-advanced {
+        height: auto;
+        max-height: 700px;
+    }
+
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .target-details {
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .campaign-meta-info {
+        flex-direction: column;
+        gap: 5px;
+        text-align: center;
+    }
+
+    .hero-stats {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .floating-badges {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .campaign-card-advanced:hover {
+        transform: translateY(-5px);
+    }
+}
+
+/* Effets de profondeur */
+.campaign-card-advanced::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(145deg, #ffffff, #f8f9fa);
+    z-index: -1;
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.campaign-card-advanced:hover::before {
+    opacity: 1;
+}
+
+/* Amélioration de l'espacement */
+.filter-form .form-select {
+    border-width: 2px;
+}
+
+.filter-form .btn {
+    border-radius: 10px;
+}
+
+/* Badges améliorés */
+.badge {
+    font-weight: 500;
+}
+
+/* Transition douce pour tous les éléments interactifs */
+.btn, .campaign-card-advanced, .metric-advanced, .target-card {
+    transition: all 0.3s ease;
+}

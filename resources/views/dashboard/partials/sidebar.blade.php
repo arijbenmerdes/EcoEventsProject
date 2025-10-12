@@ -67,11 +67,42 @@
       </div>
     </li>
      <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+     
+
+
+
+
+
+
+<!--reclamation et reponse  -->
+    <li class="nav-item {{ request()->routeIs('reclamations.*', 'reponses.*') ? 'active' : '' }}">
+  <a class="nav-link" data-bs-toggle="collapse" href="#reclamations-menu"
+     aria-expanded="{{ request()->routeIs('reclamations.*', 'reponses.*') ? 'true' : 'false' }}"
+     aria-controls="reclamations-menu">
+    <span class="menu-title">Réclamations</span>
+    <i class="menu-arrow"></i>
+    <i class="mdi mdi-bullhorn menu-icon"></i>
+  </a>
+  <div class="collapse {{ request()->routeIs('reclamations.*', 'reponses.*') ? 'show' : '' }}" id="reclamations-menu">
+    <ul class="nav flex-column sub-menu">
+      <li class="nav-item {{ request()->routeIs('reclamations.*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('reclamations.index') }}">Réclamations</a>
+      </li>
+      <li class="nav-item {{ request()->routeIs('reponses.*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('reponses.index') }}">Réponses</a>
+      </li>
+    </ul>
+  </div>
+</li>
+
+ 
+    <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
       <a class="nav-link" href="{{ route('landing') }}">
         <span class="menu-title">Home</span>
 <i class="mdi mdi-home-variant menu-icon"></i>      </a>
     </li>
 
+     
     <!-- Déconnexion -->
     <li class="nav-item">
       <a class="nav-link" href=""

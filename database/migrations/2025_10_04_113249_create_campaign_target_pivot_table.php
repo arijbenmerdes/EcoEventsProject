@@ -4,9 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCampaignsTable extends Migration
-{
-    public function up()
+return new class extends Migration
+{public function up()
     {
         Schema::create('campaigns', function (Blueprint $table) {
             $table->id();
@@ -30,3 +29,4 @@ class CreateCampaignsTable extends Migration
         Schema::dropIfExists('campaigns');
     }
 }
+;

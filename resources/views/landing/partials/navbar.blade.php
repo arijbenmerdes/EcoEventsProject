@@ -7,7 +7,11 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto py-0">
             <a href="" class="nav-item nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Home</a>
+<<<<<<< HEAD
             <a href="" class="nav-item nav-link {{ request()->routeIs('about') ? 'active' : '' }}">About</a>
+=======
+            <a href="{{ route('campagnes.front') }}" class="nav-item nav-link {{ request()->routeIs('about') ? 'active' : '' }}">Campagnes</a>
+>>>>>>> f43509b114ee21e9d3cfa8eb52f622a47d1cdbf7
             <a href="" class="nav-item nav-link {{ request()->routeIs('service') ? 'active' : '' }}">Services</a>
             <a href="" class="nav-item nav-link {{ request()->routeIs('blog') ? 'active' : '' }}">Blogs</a>
             <div class="nav-item dropdown">
