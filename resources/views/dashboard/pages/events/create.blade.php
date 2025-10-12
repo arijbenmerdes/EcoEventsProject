@@ -13,8 +13,9 @@
         </div>
     @endif
 
-    <form action="{{ route('events.store') }}" method="POST">
+    <form action="{{ route('events.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
+
         <div class="mb-3">
             <label for="title" class="form-label">Titre</label>
             <input type="text" name="title" class="form-control" required>
@@ -38,6 +39,16 @@
         <div class="mb-3">
             <label for="location" class="form-label">Lieu</label>
             <input type="text" name="location" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label for="participants_count" class="form-label">Nombre de participants</label>
+            <input type="number" name="participants_count" class="form-control" min="0" value="{{ old('participants_count', 0) }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Image de l'événement</label>
+            <input type="file" name="image" class="form-control" accept="image/*">
         </div>
 
         <button type="submit" class="btn btn-success">Enregistrer</button>

@@ -44,6 +44,10 @@
             <label for="location" class="form-label">Lieu</label>
             <input type="text" name="location" class="form-control" value="{{ $event->location }}">
         </div>
+<div class="mb-3">
+    <label for="participants_count" class="form-label">Nombre de participants</label>
+    <input type="number" name="participants_count" class="form-control" min="0" value="{{ old('participants_count', $event->participants_count ?? 0) }}">
+</div>
 
         <button type="submit" class="btn btn-primary">Mettre à jour</button>
         <a href="{{ route('events.index') }}" class="btn btn-secondary">Annuler</a>
