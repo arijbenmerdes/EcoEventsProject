@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Route;
 
 
 
+use App\Http\Controllers\ReclamationController;
+use App\Http\Controllers\ReponseController;
+
+
+
+Route::resource('reclamations', ReclamationController::class);
+Route::resource('reponses', ReponseController::class);
 
 Route::get('/', function () {
     return view('dashboard.pages.dashboard');
@@ -18,6 +25,12 @@ Route::get('/', function () {
 Route::get('/landing/home', function () {
     return view('landing.pages.home');
 })->name('landing');
+Route::resource('events', EventController::class);
+Route::get('/events/search', [EventController::class, 'search'])->name('events.search');
+Route::post('/events/{event}/comment', [EventController::class, 'storeComment'])->name('events.comment');
+Route::get('/events/export/pdf', [EventController::class, 'exportPdf'])->name('events.export.pdf');
+Route::get('/events/export/excel', [EventController::class, 'exportExcel'])->name('events.export.excel');
+
 Route::resource('campaigns', CampaignController::class);
 Route::resource('targets', TargetController::class);
 Route::patch('/targets/{id}/toggle-activation', [TargetController::class, 'toggleActivation'])
