@@ -3,6 +3,7 @@
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\TargetController;
 use App\Models\Campaign;
 use App\Models\Target;
@@ -23,3 +24,4 @@ Route::patch('/targets/{id}/toggle-activation', [TargetController::class, 'toggl
      ->name('targets.toggle-activation');
 Route::get('/campagnes', [App\Http\Controllers\CampaignController::class, 'frontcampaigns'])->name('campagnes.front');
 Route::get('/campagnes/{id}/partager', [App\Http\Controllers\CampaignController::class, 'showShareExperience'])->name('campagnes.share');
+Route::post('/experience', [ExperienceController::class, 'store'])->name('experience.store');

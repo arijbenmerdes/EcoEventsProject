@@ -92,119 +92,107 @@
                         </div>
                     </div>
 
-                    <!-- Formulaire de partage -->
-                    <form class="experience-form" id="experienceForm">
-                        @csrf
-                        <input type="hidden" name="campaign_id" value="{{ $campagne->id }}">
-
-                        <!-- Section 1: Évaluation -->
-                        <div class="form-section">
-                            <h3>🎯 Comment évaluez-vous cette expérience ?</h3>
-
-                            <div class="rating-stars">
-                                <div class="rating-star" data-rating="1">⭐</div>
-                                <div class="rating-star" data-rating="2">⭐</div>
-                                <div class="rating-star" data-rating="3">⭐</div>
-                                <div class="rating-star" data-rating="4">⭐</div>
-                                <div class="rating-star" data-rating="5">⭐</div>
-                            </div>
+                <form method="POST" action="{{ route('experience.store') }}" enctype="multipart/form-data" class="experience-form" id="experienceForm">
+                            @csrf
+                            <input type="hidden" name="campaign_id" value="{{ $campagne->id }}">
                             <input type="hidden" name="rating" id="ratingInput">
 
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Points forts de la campagne</label>
-                                <textarea class="form-control experience-textarea" name="strengths" placeholder="Qu'avez-vous particulièrement apprécié ? Quels aspects étaient les plus motivants ?"></textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Suggestions d'amélioration</label>
-                                <textarea class="form-control experience-textarea" name="improvements" placeholder="Avez-vous des suggestions pour améliorer cette campagne ?"></textarea>
-                            </div>
-                        </div>
-
-                        <!-- Section 2: Témoignage -->
-                        <div class="form-section">
-                            <h3>📖 Partagez votre histoire</h3>
-
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Votre expérience détaillée</label>
-                                <textarea class="form-control experience-textarea" name="testimonial" placeholder="Racontez votre expérience personnelle : comment vous vous êtes impliqué, ce que vous avez accompli, les défis rencontrés, les moments marquants..."></textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Leçon apprise</label>
-                                <textarea class="form-control experience-textarea" name="lessons" placeholder="Qu'avez-vous appris grâce à cette expérience ?"></textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Recommandation</label>
-                                <textarea class="form-control experience-textarea" name="recommendation" placeholder="Recommanderiez-vous cette expérience à d'autres personnes ? Pourquoi ?"></textarea>
-                            </div>
-                        </div>
-
-                        <!-- Section 3: Photos -->
-                        <div class="form-section">
-                            <h3>📸 Partagez vos photos</h3>
-
-                            <div class="photo-upload-area" id="photoUploadArea">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <h4>Glissez-déposez vos photos ici</h4>
-                                <p class="text-muted">ou cliquez pour sélectionner des fichiers</p>
-                                <input type="file" id="photoInput" multiple accept="image/*" style="display: none;">
-                            </div>
-
-                            <div class="uploaded-photos" id="uploadedPhotos">
-                                <!-- Les photos uploadées apparaîtront ici -->
-                            </div>
-                        </div>
-
-                        <!-- Section 4: Impact -->
-                        <div class="form-section">
-                            <h3>🌱 Mesurez votre impact</h3>
-
-                            <div class="impact-metrics">
-                                <div class="metric-input">
-                                    <label>Heures consacrées</label>
-                                    <input type="number" name="hours_contributed" min="0" step="0.5" placeholder="0">
+                            <!-- Section 1: Évaluation -->
+                            <div class="form-section">
+                                <h3>🎯 Comment évaluez-vous cette expérience ?</h3>
+                                <div class="rating-stars">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <div class="rating-star" data-rating="{{ $i }}">⭐</div>
+                                    @endfor
                                 </div>
 
-                                <div class="metric-input">
-                                    <label>Personnes sensibilisées</label>
-                                    <input type="number" name="people_reached" min="0" placeholder="0">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Points forts de la campagne</label>
+                                    <textarea class="form-control experience-textarea" name="strengths" placeholder="Qu'avez-vous particulièrement apprécié ? Quels aspects étaient les plus motivants ?"></textarea>
                                 </div>
 
-                                <div class="metric-input">
-                                    <label>Déchets collectés (kg)</label>
-                                    <input type="number" name="waste_collected" min="0" step="0.1" placeholder="0">
-                                </div>
-
-                                <div class="metric-input">
-                                    <label>Arbres plantés</label>
-                                    <input type="number" name="trees_planted" min="0" placeholder="0">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Suggestions d'amélioration</label>
+                                    <textarea class="form-control experience-textarea" name="improvements" placeholder="Avez-vous des suggestions pour améliorer cette campagne ?"></textarea>
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Impact personnel</label>
-                                <textarea class="form-control experience-textarea" name="personal_impact" placeholder="Comment cette expérience a-t-elle changé votre vision ou vos habitudes ?"></textarea>
-                            </div>
-                        </div>
+                            <!-- Section 2: Témoignage -->
+                            <div class="form-section">
+                                <h3>📖 Partagez votre histoire</h3>
 
-                        <!-- Boutons d'action -->
-                        <div class="row mt-5">
-                            <div class="col-md-6">
-                                <a href="{{ route('campagnes.front') }}" class="back-to-campaign">
-                                    <i class="fas fa-arrow-left me-2"></i>
-                                    Retour aux campagnes
-                                </a>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Votre expérience détaillée</label>
+                                    <textarea class="form-control experience-textarea" name="testimonial" placeholder="Racontez votre expérience personnelle : comment vous vous êtes impliqué, ce que vous avez accompli, les défis rencontrés, les moments marquants..."></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Leçon apprise</label>
+                                    <textarea class="form-control experience-textarea" name="lessons" placeholder="Qu'avez-vous appris grâce à cette expérience ?"></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Recommandation</label>
+                                    <textarea class="form-control experience-textarea" name="recommendation" placeholder="Recommanderiez-vous cette expérience à d'autres personnes ? Pourquoi ?"></textarea>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <button type="submit" class="submit-experience-btn">
-                                    <i class="fas fa-paper-plane me-2"></i>
-                                    Publier mon expérience
-                                </button>
+
+                            <!-- Section 3: Photo -->
+                            <div class="form-section">
+                                <h3>📸 Partagez une photo</h3>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Téléversez une photo de votre expérience</label>
+                                    <input type="file" name="photo" accept="image/*" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                    </form>
+
+                            <!-- Section 4: Impact -->
+                            <div class="form-section">
+                                <h3>🌱 Mesurez votre impact</h3>
+
+                                <div class="impact-metrics row">
+                                    <div class="col-md-12 mb-3">
+                                        <label>Heures consacrées</label>
+                                        <input type="number" name="hours_contributed" min="0" step="0.5" class="form-control" placeholder="0">
+                                    </div>
+
+                                    <div class="col-md-12 mb-12">
+                                        <label>Personnes sensibilisées</label>
+                                        <input type="number" name="people_reached" min="0" class="form-control" placeholder="0">
+                                    </div>
+
+                                    <div class="col-md-12 mb-12">
+                                        <label>Déchets collectés (kg)</label>
+                                        <input type="number" name="waste_collected" min="0" step="0.1" class="form-control" placeholder="0">
+                                    </div>
+
+                                    <div class="col-md-12 mb-12">
+                                        <label>Arbres plantés</label>
+                                        <input type="number" name="trees_planted" min="0" class="form-control" placeholder="0">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Impact personnel</label>
+                                    <textarea class="form-control experience-textarea" name="personal_impact" placeholder="Comment cette expérience a-t-elle changé votre vision ou vos habitudes ?"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Boutons -->
+                            <div class="row mt-5">
+                                <div class="col-md-6">
+                                    <a href="{{ route('campagnes.front') }}" class="btn btn-outline-secondary w-100">
+                                        <i class="fas fa-arrow-left me-2"></i> Retour aux campagnes
+                                    </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-success w-100">
+                                        <i class="fas fa-paper-plane me-2"></i> Publier mon expérience
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
                 </div>
             </div>
         </div>
@@ -216,7 +204,6 @@
 @section('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Système d'évaluation par étoiles
     const stars = document.querySelectorAll('.rating-star');
     const ratingInput = document.getElementById('ratingInput');
 
@@ -225,72 +212,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const rating = this.getAttribute('data-rating');
             ratingInput.value = rating;
 
-            // Mettre à jour l'affichage des étoiles
             stars.forEach(s => {
-                if (s.getAttribute('data-rating') <= rating) {
-                    s.classList.add('active');
-                } else {
-                    s.classList.remove('active');
-                }
+                s.classList.toggle('active', s.getAttribute('data-rating') <= rating);
             });
         });
     });
-
-    // Upload de photos
-    const photoUploadArea = document.getElementById('photoUploadArea');
-    const photoInput = document.getElementById('photoInput');
-    const uploadedPhotos = document.getElementById('uploadedPhotos');
-
-    photoUploadArea.addEventListener('click', () => photoInput.click());
-
-    photoUploadArea.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        photoUploadArea.style.borderColor = '#2ecc71';
-        photoUploadArea.style.background = 'rgba(46, 204, 113, 0.1)';
-    });
-
-    photoUploadArea.addEventListener('dragleave', () => {
-        photoUploadArea.style.borderColor = '#bdc3c7';
-        photoUploadArea.style.background = 'transparent';
-    });
-
-    photoUploadArea.addEventListener('drop', (e) => {
-        e.preventDefault();
-        handleFiles(e.dataTransfer.files);
-    });
-
-    photoInput.addEventListener('change', (e) => {
-        handleFiles(e.target.files);
-    });
-
-    function handleFiles(files) {
-        Array.from(files).forEach(file => {
-            if (file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const photoPreview = document.createElement('div');
-                    photoPreview.className = 'photo-preview';
-                    photoPreview.innerHTML = `
-                        <img src="${e.target.result}" alt="Preview">
-                        <button type="button" class="remove-photo" onclick="this.parentElement.remove()">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    `;
-                    uploadedPhotos.appendChild(photoPreview);
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    }
-
-    // Validation du formulaire
-    document.getElementById('experienceForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        // Ici vous ajouteriez l'envoi AJAX vers votre backend
-        alert('Votre expérience a été partagée avec succès !');
-        window.location.href = "{{ route('campagnes.front') }}";
-    });
 });
 </script>
+
 @endsection

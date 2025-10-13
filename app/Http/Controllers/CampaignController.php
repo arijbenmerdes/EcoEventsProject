@@ -98,7 +98,7 @@ public function showShareExperience($id)
 
         $data = $validator->validated();
         $targets = $data['targets'];
-        unset($data['targets']); // Retirer les targets du data principal
+        unset($data['targets']);
 
         $data['created_by'] = Auth::id();
         $data['status'] = Campaign::STATUS_DRAFT;
