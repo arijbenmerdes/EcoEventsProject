@@ -334,33 +334,39 @@
                                 </div>
                             </div>
                         </div>
+<!-- Footer de la carte -->
+<div class="campaign-footer">
+    <div class="row g-2 align-items-center">
+        <div class="col-md-8">
+            <div class="campaign-meta-info">
+                <small class="text-muted">
+                    <i class="fas fa-clock me-1"></i>
+                    Créée le {{ $campagne->created_at->format('d/m/Y') }}
+                </small>
+                @if($campagne->experiences_count > 0)
+                <small class="text-muted ms-3">
+                    <i class="fas fa-comments me-1"></i>
+                    {{ $campagne->experiences_count }} expérience(s)
+                </small>
+                @endif
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="action-buttons">
 
-                        <!-- Footer de la carte -->
-                        <div class="campaign-footer">
-                            <div class="row g-2 align-items-center">
-                                <div class="col-md-8">
-                                    <div class="campaign-meta-info">
-                                        <small class="text-muted">
-                                            <i class="fas fa-clock me-1"></i>
-                                            Créée le {{ $campagne->created_at->format('d/m/Y') }}
-                                        </small>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="action-buttons">
-                                        @if($campagne->is_ongoing)
-    <button class="btn btn-success participate-btn">
-        <i class="fas fa-hand-holding-heart me-1"></i>Participer
-    </button>
-@else
-    <a href="{{ route('campagnes.share', $campagne->id) }}" class="btn btn-outline-primary details-btn">
-        <i class="fas fa-share-alt me-1"></i>Partager mon expérience
-    </a>
-@endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <a href="{{ route('campagnes.share', $campagne->id) }}" class="btn btn-outline-primary details-btn">
+                        <i class="fas fa-share-alt me-1"></i>Partager
+                    </a>
+
+                <!-- NOUVEAU BOUTON : Voir les expériences -->
+                <a href="{{ route('campagnes.experiences', $campagne->id) }}"
+                   class="btn btn-outline-info btn-sm mt-2 w-100">
+                    <i class="fas fa-eye me-1"></i>Voir les expériences
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
                     </div>
                 </div>
             @empty

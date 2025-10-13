@@ -8,6 +8,8 @@
         <div class="navbar-nav ms-auto py-0">
             <a href="" class="nav-item nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Home</a>
             <a href="{{ route('campagnes.front') }}" class="nav-item nav-link {{ request()->routeIs('about') ? 'active' : '' }}">Campagnes</a>
+             <a href="{{ route('experiences.index') }}" class="nav-item nav-link {{ request()->routeIs('about') ? 'active' : '' }}">Expériences partagées</a>
+
             <a href="" class="nav-item nav-link {{ request()->routeIs('service') ? 'active' : '' }}">Services</a>
             <a href="" class="nav-item nav-link {{ request()->routeIs('blog') ? 'active' : '' }}">Blogs</a>
             <div class="nav-item dropdown">

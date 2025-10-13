@@ -1,12 +1,49 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Campaign;
 use Illuminate\Http\Request;
 use App\Models\Experience;
 use Illuminate\Support\Facades\Auth;
 
 class ExperienceController extends Controller
 {
+    /**
+     * Afficher toutes les expériences partagées
+     */
+    public function index(Request $request)
+    {
+           $query = Experience::with(['user', 'campaign']);
+
+
+        // Filtrage par campagne
+        if ($request->has('campaign') && $request->campaign) {
+            $query->where('campaign_id', $request->campaign);
+        }
+
+        // Filtrage par note
+        if ($request->has('rating') && $request->rating) {
+            $query->where('rating', $request->rating);
+        }
+
+        $experiences = $query->orderBy('created_at', 'desc')
+                           ->paginate(12);
+
+    $campaigns = Campaign::all();
+
+        return view('landing.pages.experiences', compact('experiences', 'campaigns'));
+    }
+public function campaignExperiences($id)
+{
+    $campaign = Campaign::with('targets')->findOrFail($id);
+
+    $experiences = Experience::with(['user', 'campaign'])
+        ->where('campaign_id', $id)
+        ->orderBy('created_at', 'desc')
+        ->paginate(12);
+
+    return view('landing.pages.campaign-experiences', compact('experiences', 'campaign'));
+}
     public function store(Request $request)
     {
         // Debug: Vérifiez l'utilisateur

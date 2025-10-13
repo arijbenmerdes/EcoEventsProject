@@ -38,3 +38,5 @@ Route::patch('/targets/{id}/toggle-activation', [TargetController::class, 'toggl
 Route::get('/campagnes', [App\Http\Controllers\CampaignController::class, 'frontcampaigns'])->name('campagnes.front');
 Route::get('/campagnes/{id}/partager', [App\Http\Controllers\CampaignController::class, 'showShareExperience'])->name('campagnes.share');
 Route::post('/experience', [ExperienceController::class, 'store'])->name('experience.store');
+Route::get('/experiences', [App\Http\Controllers\ExperienceController::class, 'index'])->name('experiences.index');
+Route::get('/campagnes/{id}/experiences', [App\Http\Controllers\ExperienceController::class, 'campaignExperiences'])->name('campagnes.experiences');
