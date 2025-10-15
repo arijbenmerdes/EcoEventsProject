@@ -95,7 +95,7 @@
                         <div class="experience-header">
                             <div class="experience-image-container">
                                 @if($experience->image_url)
-                                    <img src="{{ $experience->image_url }}"
+                                    <img src="{{  asset($experience->image_url) }}"
                                          class="experience-image"
                                          alt="Expérience {{ $experience->campaign->title }}">
                                 @else
@@ -198,6 +198,50 @@
                             @endif
                         </div>
 
+                        <!-- ✅ SECTION ANALYSE IA CORRIGÉE (une seule section) -->
+                        <div class="ai-analysis-section mt-3 p-3 border-start border-4 border-primary bg-light rounded">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-robot text-primary me-2 fs-5"></i>
+                                <h6 class="mb-0 text-primary fw-bold">Analyse Intelligente</h6>
+                            </div>
+                            
+                            {{-- Résumé IA --}}
+                            <div class="mb-3">
+                                @if($experience->ai_summary === 'Analyse en attente' || $experience->ai_sentiment === 'erreur')
+                                    <div class="alert alert-warning py-2 mb-2">
+                                        <small class="d-flex align-items-center">
+                                            <i class="fas fa-sync-alt me-2 text-warning"></i>
+                                            <span>Analyse en cours de génération...</span>
+                                        </small>
+                                    </div>
+                                    <form action="{{ route('experiences.generate-summary', $experience->id) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-bolt me-1"></i> Générer l'analyse IA
+                                        </button>
+                                    </form>
+                                @else
+                                    <p class="mb-1"><small class="text-muted">📋 Résumé IA:</small></p>
+                                    <p class="mb-0 fs-6 text-dark">{{ $experience->ai_summary }}</p>
+                                @endif
+                            </div>
+
+                            {{-- Sentiment IA --}}
+                            <div class="d-flex align-items-center justify-content-between">
+                                <small class="text-muted">🎭 Sentiment détecté:</small>
+                                @if($experience->ai_sentiment === 'erreur')
+                                    <span class="badge bg-warning px-3 py-1">
+                                        <i class="fas fa-clock me-1"></i> En attente
+                                    </span>
+                                @else
+                                    <span class="badge bg-{{ $experience->sentiment_color }} px-3 py-1 fw-normal">
+                                        {{ $experience->sentiment_icon }} 
+                                        {{ ucfirst($experience->ai_sentiment) }}
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <!-- Footer de la carte -->
                         <div class="experience-footer">
                             <div class="row g-2 align-items-center">
@@ -236,6 +280,48 @@
                 </div>
             @endforelse
         </div>
+
+        <!-- ✅ SECTION ANALYSE GLOBALE DE LA CAMPAGNE -->
+        @if($campaignAnalysis && $experiences->total() > 0)
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="global-analysis-card p-4 bg-primary text-white rounded shadow">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-chart-bar fa-2x me-3 text-warning"></i>
+                            <h4 class="text-white mb-0">Analyse Globale de la Campagne</h4>
+                        </div>
+                        
+                        @if($campaignAnalysis['success'])
+                            <div class="analysis-content">
+                                <p class="fs-5 mb-3">{{ $campaignAnalysis['summary'] }}</p>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <span class="fs-6">Sentiment global détecté :</span>
+                                    <span class="badge bg-{{ $campaignAnalysis['sentiment'] === 'positif' ? 'success' : ($campaignAnalysis['sentiment'] === 'negatif' ? 'danger' : 'secondary') }} fs-6 px-3 py-2">
+                                        @if($campaignAnalysis['sentiment'] === 'positif') 😊 Positif
+                                        @elseif($campaignAnalysis['sentiment'] === 'negatif') 😔 Négatif  
+                                        @else 😐 Neutre
+                                        @endif
+                                    </span>
+                                </div>
+                            </div>
+                        @else
+                            <div class="analysis-fallback">
+                                <div class="alert alert-warning mb-3">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    {{ $campaignAnalysis['summary'] }}
+                                </div>
+                                <p class="mb-0 text-light">
+                                    <small>
+                                        <i class="fas fa-lightbulb me-1"></i>
+                                        L'analyse se base sur {{ $experiences->total() }} expérience(s) partagée(s)
+                                    </small>
+                                </p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @endif
 
         @if($experiences->hasPages())
             <div class="row mt-5">

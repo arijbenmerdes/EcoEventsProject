@@ -20,7 +20,9 @@ class Experience extends Model
         'waste_collected',
         'trees_planted',
         'personal_impact',
-        'image_url', // ✅ URL de la photo
+        'image_url',
+        'ai_summary',
+        'ai_sentiment'
     ];
 
     public function user()
@@ -32,4 +34,35 @@ class Experience extends Model
     {
         return $this->belongsTo(Campaign::class);
     }
+
+    public function getSentimentColorAttribute()
+    {
+        return match($this->ai_sentiment) {
+            'positif' => 'success',
+            'negatif' => 'danger',
+            default => 'secondary'
+        };
+    }
+
+    public function getSentimentIconAttribute()
+    {
+        return match($this->ai_sentiment) {
+            'positif' => '😊',
+            'negatif' => '😔',
+            default => '😐'
+        };
+    }
+
+public function analyzeWithAI()
+{
+    $aiService = new \App\Services\AIAnalysisService();
+    $analysis = $aiService->analyzeExperience($this);
+    
+    $this->update([
+        'ai_sentiment' => $analysis['sentiment'],
+        'ai_summary' => $analysis['summary']
+    ]);
+    
+    return $analysis['success'];
+}
 }

@@ -267,15 +267,14 @@
             @endforelse
         </div>
 
-        @if($experiences->hasPages())
+        <!-- @if($experiences->hasPages())
             <div class="row mt-5">
                 <div class="col-12">
                     <nav aria-label="Navigation des expériences">
-                        {{ $experiences->links('vendor.pagination.bootstrap-5') }}
                     </nav>
                 </div>
             </div>
-        @endif
+        @endif -->
     </div>
 </div>
 @endsection

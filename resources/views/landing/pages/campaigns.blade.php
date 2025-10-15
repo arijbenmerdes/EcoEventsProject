@@ -129,7 +129,7 @@
                         <!-- Header de la carte -->
                         <div class="campaign-header position-relative">
                             <div class="campaign-image-container">
-                                <img src="{{ $campagne->image_url ? asset('storage/' . $campagne->image_url) : asset('landing/img/campaign-default.jpg') }}"
+                                <img src="{{ $campagne->image_url ?? asset('landing/img/campaign-default.jpg') }}"
                                      class="campaign-image"
                                      alt="{{ $campagne->title }}">
                                 <div class="image-gradient-overlay"></div>

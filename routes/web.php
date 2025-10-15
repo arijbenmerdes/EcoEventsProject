@@ -46,3 +46,6 @@ Route::get('/campagnes/{id}/partager', [App\Http\Controllers\CampaignController:
 Route::post('/experience', [ExperienceController::class, 'store'])->name('experience.store');
 Route::get('/experiences', [App\Http\Controllers\ExperienceController::class, 'index'])->name('experiences.index');
 Route::get('/campagnes/{id}/experiences', [App\Http\Controllers\ExperienceController::class, 'campaignExperiences'])->name('campagnes.experiences');
+// Route pour générer le résumé plus tard
+Route::post('/experiences/{id}/generate-summary', [ExperienceController::class, 'generateSummary'])
+    ->name('experiences.generate-summary');
