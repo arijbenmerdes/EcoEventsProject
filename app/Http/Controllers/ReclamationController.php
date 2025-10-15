@@ -10,12 +10,12 @@ class ReclamationController extends Controller
     public function index()
     {
         $reclamations = Reclamation::all();
-        return view('dashboard.pages.reclamations.index', compact('reclamations'));
+        return view('landing.pages.reclamations.index', compact('reclamations'));
     }
 
     public function create()
     {
-        return view('dashboard.pages.reclamations.create');
+        return view('landing.pages.reclamations.create');
     }
 
     public function store(Request $request)
@@ -37,12 +37,12 @@ class ReclamationController extends Controller
 
     public function show(Reclamation $reclamation)
     {
-        return view('dashboard.pages.reclamations.show', compact('reclamation'));
+        return view('landing.pages.reclamations.show', compact('reclamation'));
     }
 
     public function edit(Reclamation $reclamation)
     {
-        return view('dashboard.pages.reclamations.edit', compact('reclamation'));
+        return view('landing.pages.reclamations.edit', compact('reclamation'));
     }
 
     public function update(Request $request, Reclamation $reclamation)

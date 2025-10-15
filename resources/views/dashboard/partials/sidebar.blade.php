@@ -88,6 +88,7 @@
       <li class="nav-item {{ request()->routeIs('reclamations.*') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('reclamations.index') }}">Réclamations</a>
       </li>
+
       <li class="nav-item {{ request()->routeIs('reponses.*') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('reponses.index') }}">Réponses</a>
       </li>

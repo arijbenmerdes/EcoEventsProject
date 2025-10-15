@@ -16,6 +16,12 @@ use App\Http\Controllers\ReponseController;
 
 
 
+
+use App\Http\Controllers\AIController;
+
+Route::view('/ai', 'ai'); // Page chat
+Route::post('/chat-ai', [AIController::class, 'chat']); // Endpoint pour envoyer les messages
+
 Route::resource('reclamations', ReclamationController::class);
 Route::resource('reponses', ReponseController::class);
 

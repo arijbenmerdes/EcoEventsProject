@@ -25,7 +25,11 @@
                     <a href="" class="dropdown-item">404 Page</a>
                 </div>
             </div>
-            <a href="" class="nav-item nav-link {{ request()->routeIs('contact') ? 'active' : '' }}">Contact Us</a>
+
+            <a href="{{ route('reclamations.index') }}" class="nav-item nav-link {{ request()->routeIs('reclamations.index') ? 'active' : '' }}">
+    Contact Us
+</a>
+<a href="{{ url('/ai') }}" class="nav-item nav-link {{ request()->is('ai') ? 'active' : '' }}">AI Chatbot</a>
         </div>
         <a href="#" class="btn btn-primary rounded-pill py-2 px-4 my-3 my-lg-0 flex-shrink-0">Get Started</a>
     </div>
