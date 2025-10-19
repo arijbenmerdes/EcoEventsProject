@@ -166,4 +166,11 @@ public function update(StoreEventRequest $request, Event $event)
         $event->delete();
         return redirect()->route('events.index')->with('success', 'Événement supprimé avec succès.');
     }
+    public function getEvents()
+    {
+        $events = Event::select('id', 'title as title', 'start_date as start', 'end_date as end')
+            ->get();
+
+        return response()->json($events);
+    }
 }

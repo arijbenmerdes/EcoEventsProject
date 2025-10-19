@@ -10,6 +10,9 @@
     <a href="{{ route('user.events.index') }}" class="{{ request()->routeIs('user.events.index') ? 'active' : '' }}">
         <i class="fa fa-calendar me-2"></i>Événements
     </a>
+    <a href="{{ route('calendar') }}" class="{{ request()->routeIs('calendar') ? 'active' : '' }}">
+    <i class="fa fa-calendar-check me-2"></i>Calendrier
+</a>
 
     <a href="#"><i class="fa fa-ticket me-2"></i>Mes Réservations</a>
     <a href="#"><i class="fa fa-user-cog me-2"></i>Profil</a>

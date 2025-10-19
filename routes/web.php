@@ -37,6 +37,11 @@ Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('l
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 Route::get('/events/stats', [EventController::class, 'stats'])->name('events.stats');
+Route::get('/api/events', [EventController::class, 'getEvents']);
+//Route::get('/calendar', function () {
+   // return view('calendar');
+//})->name('calendar'); // ← Ajout du nom ici
+
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +50,7 @@ Route::get('/events/stats', [EventController::class, 'stats'])->name('events.sta
 */
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', fn() => view('dashboard.pages.dashboard'))->name('admin.dashboard');
+ 
 });
 
 /*
@@ -74,8 +80,11 @@ Route::get('/user/events/{event}/comment/{comment}/edit', [UserController::class
     ->name('user.events.comment.edit');
 Route::put('/user/events/{event}/comment/{comment}', [UserController::class, 'updateComment'])
     ->name('user.events.comment.update');
-
+Route::get('/calendar', function () {
+        return view('calendar');
+    })->name('calendar');
 });
+
 
 /*
 |--------------------------------------------------------------------------
