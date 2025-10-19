@@ -41,6 +41,13 @@
       <li class="nav-item {{ request()->routeIs('events.create') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('events.create') }}">Créer un événement</a>
       </li>
+      <li class="nav-item">
+  <a class="nav-link" href="{{ route('events.stats') }}">
+    <i class="mdi mdi-chart-bar"></i>
+    <span class="menu-title">Statistiques</span>
+  </a>
+</li>
+
     </ul>
   </div>
 </li>

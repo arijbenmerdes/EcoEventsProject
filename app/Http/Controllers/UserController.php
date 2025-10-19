@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
 use App\Models\EventComment;
+use App\Http\Requests\StoreCommentRequest;
 
 class UserController extends Controller
 {
@@ -77,13 +78,9 @@ public function showEvent($id)
         return redirect()->route('user.events.show', $event->id)
                          ->with('success', 'Commentaire mis à jour !');
     }
-   public function storeComment(Request $request, Event $event)
+public function storeComment(StoreCommentRequest $request, Event $event)
 {
-    $request->validate([
-        'user_name' => 'required|string|max:255',
-        'comment' => 'required|string',
-        'rating' => 'nullable|integer|min:1|max:5',
-    ]);
+    
 
     // Création du commentaire
     $event->comments()->create([
