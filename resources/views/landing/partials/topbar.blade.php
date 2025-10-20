@@ -1,4 +1,6 @@
-<div class="container-fluid topbar bg-light px-5 d-none d-lg-block">
+ {{-- Si l'utilisateur n'est PAS connecté --}}
+    @guest
+    <div class="container-fluid topbar bg-light px-5 d-none d-lg-block">
     <div class="row gx-0 align-items-center">
         <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
 
@@ -30,3 +32,4 @@
 
     </div>
 </div>
+    @endguest

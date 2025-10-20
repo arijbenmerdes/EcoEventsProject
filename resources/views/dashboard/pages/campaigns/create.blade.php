@@ -182,7 +182,6 @@
         </div>
     </div>
 </div>
-<<<<<<< HEAD
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -219,5 +218,3 @@ map.on('click', function(e) {
 
 
 
-=======
->>>>>>> 6229517926d21a576d9bf15f83438bf4d8047cfa

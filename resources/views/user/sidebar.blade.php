@@ -13,7 +13,9 @@
     <a href="{{ route('calendar') }}" class="{{ request()->routeIs('calendar') ? 'active' : '' }}">
     <i class="fa fa-calendar-check me-2"></i>Calendrier
 </a>
-
+  <a href="{{ route('landing') }}" class="{{ request()->routeIs('landing') ? 'active' : '' }}">
+    <i class="fa fa-home me-2"></i>Home page 
+</a>
     <a href="#"><i class="fa fa-ticket me-2"></i>Mes Réservations</a>
     <a href="#"><i class="fa fa-user-cog me-2"></i>Profil</a>
     <a href="#"><i class="fa fa-cog me-2"></i>Paramètres</a>

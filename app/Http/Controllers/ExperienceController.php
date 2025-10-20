@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Experience;
 use App\Services\AIAnalysisService;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Str; 
 class ExperienceController extends Controller
 {
@@ -83,10 +85,7 @@ class ExperienceController extends Controller
         set_time_limit(1000);
         ini_set('max_execution_time', 1000);
 
-        $user = \App\Models\User::firstOrCreate(
-            ['email' => 'test@ecoevents.com'],
-            ['name' => 'Utilisateur Test', 'password' => bcrypt('password123')]
-        );
+     $user = Auth::user();
 
         $validated = $request->validate([
             'campaign_id' => 'required|exists:campaigns,id',

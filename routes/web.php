@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
@@ -7,17 +8,13 @@ use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\TargetController;
 use App\Models\Campaign;
 use App\Models\Target;
-use Illuminate\Support\Facades\Route;
-
-
-
-use App\Http\Controllers\ReclamationController;
-use App\Http\Controllers\ReponseController;
 
 
 
 
-use App\Http\Controllers\AIController;
+
+
+
 
 Route::view('/ai', 'ai'); // Page chat
 Route::post('/chat-ai', [AIController::class, 'chat']); // Endpoint pour envoyer les messages
@@ -100,6 +97,22 @@ Route::put('/user/events/{event}/comment/{comment}', [UserController::class, 'up
 Route::get('/calendar', function () {
         return view('calendar');
     })->name('calendar');
+
+/*
+|--------------------------------------------------------------------------
+| Autres routes (campagnes, cibles, expériences)
+|--------------------------------------------------------------------------
+*/
+
+
+Route::get('/campagnes', [CampaignController::class, 'frontcampaigns'])->name('campagnes.front');
+Route::get('/campagnes/{id}/partager', [CampaignController::class, 'showShareExperience'])->name('campagnes.share');
+Route::post('/experience', [ExperienceController::class, 'store'])->name('experience.store');
+Route::get('/experiences', [ExperienceController::class, 'index'])->name('experiences.index');
+Route::get('/campagnes/{id}/experiences', [ExperienceController::class, 'campaignExperiences'])->name('campagnes.experiences');
+Route::post('/experiences/{id}/generate-summary', [ExperienceController::class, 'generateSummary'])->name('experiences.generate-summary');
+
+
 });
 
 
@@ -114,20 +127,7 @@ Route::post('/events/{event}/comment', [EventController::class, 'storeComment'])
 Route::get('/events/export/pdf', [EventController::class, 'exportPdf'])->name('events.export.pdf');
 Route::get('/events/export/excel', [EventController::class, 'exportExcel'])->name('events.export.excel');
 
-
-/*
-|--------------------------------------------------------------------------
-| Autres routes (campagnes, cibles, expériences)
-|--------------------------------------------------------------------------
-*/
 Route::resource('campaigns', CampaignController::class);
 Route::resource('targets', TargetController::class);
 Route::patch('/targets/{id}/toggle-activation', [TargetController::class, 'toggleActivation'])
     ->name('targets.toggle-activation');
-
-Route::get('/campagnes', [CampaignController::class, 'frontcampaigns'])->name('campagnes.front');
-Route::get('/campagnes/{id}/partager', [CampaignController::class, 'showShareExperience'])->name('campagnes.share');
-Route::post('/experience', [ExperienceController::class, 'store'])->name('experience.store');
-Route::get('/experiences', [ExperienceController::class, 'index'])->name('experiences.index');
-Route::get('/campagnes/{id}/experiences', [ExperienceController::class, 'campaignExperiences'])->name('campagnes.experiences');
-Route::post('/experiences/{id}/generate-summary', [ExperienceController::class, 'generateSummary'])->name('experiences.generate-summary');
