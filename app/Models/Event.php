@@ -17,6 +17,8 @@ class Event extends Model
         'participants_count',
         'location',
         'image',
+        'preferred_categories', // ex: ["musique","sport"]
+    'preferred_location',
     ];
 
     // 🔹 Convertir start_date et end_date en objets Carbon

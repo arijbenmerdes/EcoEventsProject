@@ -17,12 +17,15 @@
     </li>
 
     <!-- Tableau de bord -->
-    <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-      <a class="nav-link" href="{{route('dashboard')}}">
-        <span class="menu-title">Tableau de bord</span>
-        <i class="mdi mdi-view-dashboard menu-icon"></i>
-      </a>
-    </li>
+
+   <li class="nav-item {{ request()->routeIs('admin.dashboard') || request()->routeIs('user.dashboard') ? 'active' : '' }}">
+  <a class="nav-link" 
+     href="{{ auth()->user()->role === 'admin' ? route('admin.dashboard') : route('user.dashboard') }}">
+    <span class="menu-title">Tableau de bord</span>
+    <i class="mdi mdi-view-dashboard menu-icon"></i>
+  </a>
+</li>
+
 
 <!-- Événements -->
 <li class="nav-item {{ request()->routeIs('events.*') ? 'active' : '' }}">
@@ -35,12 +38,20 @@
   </a>
   <div class="collapse {{ request()->routeIs('events.*') ? 'show' : '' }}" id="events-menu">
     <ul class="nav flex-column sub-menu">
-      <li class="nav-item {{ request()->routeIs('events.index') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('events.index') }}">Tous les événements</a>
-      </li>
+
+      
       <li class="nav-item {{ request()->routeIs('events.create') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('events.create') }}">Créer un événement</a>
       </li>
+      <li class="nav-item">
+  <a class="nav-link" href="{{ route('events.stats') }}">
+    <i class="mdi mdi-chart-bar"></i>
+    <span class="menu-title">Statistiques</span>
+  </a>
+</li>
+
+
+
     </ul>
   </div>
 </li>
@@ -104,15 +115,18 @@
     </li>
 
     <!-- Déconnexion -->
-    <li class="nav-item">
-      <a class="nav-link" href=""
-         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-        <span class="menu-title">Déconnexion</span>
-        <i class="mdi mdi-logout menu-icon"></i>
-      </a>
-      <form id="logout-form" action="" method="POST" style="display: none;">
-        @csrf
-      </form>
-    </li>
+
+    <!-- Déconnexion -->
+<li class="nav-item">
+  <a class="nav-link" href=""
+     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+    <span class="menu-title">Déconnexion</span>
+    <i class="mdi mdi-logout menu-icon"></i>
+  </a>
+  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+  </form>
+</li>
+
   </ul>
 </nav>

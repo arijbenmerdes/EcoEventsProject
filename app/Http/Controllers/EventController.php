@@ -7,7 +7,8 @@ use App\Models\Event; // ⚠️ N'oublie pas d'importer le modèle
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\EventsExport;
-
+use App\Http\Requests\StoreEventRequest;
+use Illuminate\Support\Facades\DB;
 class EventController extends Controller
 {
     /**
@@ -24,12 +25,12 @@ class EventController extends Controller
      */
     public function create()
     {
-       
+
  return view('dashboard.pages.events.create');
 
-       
-        
-        
+
+
+
 
     }
    public function search(Request $request)
@@ -51,7 +52,7 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-  public function store(Request $request)
+  public function store(StoreEventRequest $request)
 {
     $request->validate([
         'title' => 'required|string|max:255',
@@ -73,6 +74,24 @@ class EventController extends Controller
     Event::create($data);
 
     return redirect()->route('events.index')->with('success', 'Événement créé avec succès.');
+}
+public function stats()
+{
+    // Statistiques : nombre d’événements et total des participants par mois
+    $stats = DB::table('events')
+        ->selectRaw('MONTH(start_date) as month, COUNT(*) as event_count, SUM(participants_count) as total_participants')
+        ->groupBy('month')
+        ->orderBy('month')
+        ->get();
+
+    // Pour afficher les mois en clair (Janvier, Février, etc.)
+    $months = [
+        1 => 'Janvier', 2 => 'Février', 3 => 'Mars', 4 => 'Avril',
+        5 => 'Mai', 6 => 'Juin', 7 => 'Juillet', 8 => 'Août',
+        9 => 'Septembre', 10 => 'Octobre', 11 => 'Novembre', 12 => 'Décembre'
+    ];
+
+    return view('dashboard.pages.events.stats', compact('stats', 'months'));
 }
 
 public function storeComment(Request $request, Event $event)
@@ -116,7 +135,7 @@ public function exportExcel()
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Event $event)
+public function update(StoreEventRequest $request, Event $event)
 {
     $request->validate([
         'title' => 'required|string|max:255',
@@ -146,5 +165,12 @@ public function exportExcel()
     {
         $event->delete();
         return redirect()->route('events.index')->with('success', 'Événement supprimé avec succès.');
+    }
+    public function getEvents()
+    {
+        $events = Event::select('id', 'title as title', 'start_date as start', 'end_date as end')
+            ->get();
+
+        return response()->json($events);
     }
 }

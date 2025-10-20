@@ -21,31 +21,113 @@ use App\Http\Controllers\AIController;
 
 Route::view('/ai', 'ai'); // Page chat
 Route::post('/chat-ai', [AIController::class, 'chat']); // Endpoint pour envoyer les messages
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Api\EventRecommendationController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReclamationController;
+use App\Http\Controllers\ReponseController;
+use App\Http\Controllers\Api\AIController;
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Routes publiques
+|--------------------------------------------------------------------------
+*/
+
+Route::view('/ai', 'ai');
+Route::post('/chat-ai', [AIController::class, 'chat']);
 
 Route::resource('reclamations', ReclamationController::class);
 Route::resource('reponses', ReponseController::class);
 
-Route::get('/', function () {
-    return view('dashboard.pages.dashboard');
-})->name('dashboard');
-Route::get('/landing/home', function () {
-    return view('landing.pages.home');
-})->name('landing');
+
+Route::get('/landing/home', fn() => view('landing.pages.home'))->name('landing');
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
+// Auth
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+Route::post('/register', [RegisteredUserController::class, 'store']);
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+Route::get('/events/stats', [EventController::class, 'stats'])->name('events.stats');
+Route::get('/api/events', [EventController::class, 'getEvents']);
+//Route::get('/calendar', function () {
+   // return view('calendar');
+//})->name('calendar'); // ← Ajout du nom ici
+
+
+/*
+|--------------------------------------------------------------------------
+| Routes ADMIN
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', fn() => view('dashboard.pages.dashboard'))->name('admin.dashboard');
+ 
+});
+
+/*
+|--------------------------------------------------------------------------
+| Routes UTILISATEUR
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'role:user'])->group(function () {
+    // Dashboard utilisateur avec les événements
+    Route::get('/user/dashboard', function () {
+        $events = \App\Models\Event::all();
+        return view('user.dashboard', compact('events'));
+    })->name('user.dashboard');
+
+    // Routes événements utilisateur
+    Route::get('/user/events', [UserController::class, 'index'])->name('user.events.index');
+    Route::get('/user/events/{event}', [UserController::class, 'showEvent'])->name('user.events.show');
+    Route::get('/user/events/search', [UserController::class, 'searchUserEvents'])->name('user.events.search');
+Route::post('/user/events/{event}/comment', [UserController::class, 'storeComment'])->name('user.events.comment');
+
+// Supprimer un commentaire
+Route::delete('/user/events/{event}/comment/{comment}', [UserController::class, 'destroyComment'])
+    ->name('user.events.comment.destroy');
+
+// Modifier un commentaire (afficher formulaire et mettre à jour)
+Route::get('/user/events/{event}/comment/{comment}/edit', [UserController::class, 'editComment'])
+    ->name('user.events.comment.edit');
+Route::put('/user/events/{event}/comment/{comment}', [UserController::class, 'updateComment'])
+    ->name('user.events.comment.update');
+Route::get('/calendar', function () {
+        return view('calendar');
+    })->name('calendar');
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| Routes ADMIN (événements)
+|--------------------------------------------------------------------------
+*/
 Route::resource('events', EventController::class);
 Route::get('/events/search', [EventController::class, 'search'])->name('events.search');
 Route::post('/events/{event}/comment', [EventController::class, 'storeComment'])->name('events.comment');
 Route::get('/events/export/pdf', [EventController::class, 'exportPdf'])->name('events.export.pdf');
 Route::get('/events/export/excel', [EventController::class, 'exportExcel'])->name('events.export.excel');
 
+
+/*
+|--------------------------------------------------------------------------
+| Autres routes (campagnes, cibles, expériences)
+|--------------------------------------------------------------------------
+*/
 Route::resource('campaigns', CampaignController::class);
 Route::resource('targets', TargetController::class);
 Route::patch('/targets/{id}/toggle-activation', [TargetController::class, 'toggleActivation'])
-     ->name('targets.toggle-activation');
-Route::get('/campagnes', [App\Http\Controllers\CampaignController::class, 'frontcampaigns'])->name('campagnes.front');
-Route::get('/campagnes/{id}/partager', [App\Http\Controllers\CampaignController::class, 'showShareExperience'])->name('campagnes.share');
+    ->name('targets.toggle-activation');
+
+Route::get('/campagnes', [CampaignController::class, 'frontcampaigns'])->name('campagnes.front');
+Route::get('/campagnes/{id}/partager', [CampaignController::class, 'showShareExperience'])->name('campagnes.share');
 Route::post('/experience', [ExperienceController::class, 'store'])->name('experience.store');
-Route::get('/experiences', [App\Http\Controllers\ExperienceController::class, 'index'])->name('experiences.index');
-Route::get('/campagnes/{id}/experiences', [App\Http\Controllers\ExperienceController::class, 'campaignExperiences'])->name('campagnes.experiences');
-// Route pour générer le résumé plus tard
-Route::post('/experiences/{id}/generate-summary', [ExperienceController::class, 'generateSummary'])
-    ->name('experiences.generate-summary');
+Route::get('/experiences', [ExperienceController::class, 'index'])->name('experiences.index');
+Route::get('/campagnes/{id}/experiences', [ExperienceController::class, 'campaignExperiences'])->name('campagnes.experiences');
+Route::post('/experiences/{id}/generate-summary', [ExperienceController::class, 'generateSummary'])->name('experiences.generate-summary');
