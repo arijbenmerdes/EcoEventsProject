@@ -18,6 +18,8 @@
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{ asset('dashboard/assets/css/style.css') }}">
     <link rel="shortcut icon" href="{{ asset('dashboard/assets/images/favicon.png') }}" />
+
+
   </head>
 
   <body>

@@ -32,6 +32,46 @@
                     </button>
                 </div>
             @endif
+ <!-- FILTRE ET RECHERCHE -->
+<form method="GET" action="{{ route('campaigns.index') }}" class="mb-3">
+    <div class="d-flex flex-wrap align-items-end gap-2">
+        <!-- Recherche -->
+        <div class="flex-grow-1" style="min-width: 200px;">
+            <input type="text" name="search" class="form-control" placeholder="Rechercher..." value="{{ request('search') }}">
+        </div>
+
+       <!-- Type -->
+<div style="min-width: 200px;">
+    <select name="type" class="form-control" style="height: 45px;">
+        <option value="">Tous les types</option>
+        @foreach($types as $key => $value)
+            <option value="{{ $key }}" {{ request('type') == $key ? 'selected' : '' }}>
+                {{ $value }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
+<!-- Focus écologique -->
+<div style="min-width: 200px; margin-left: 10px;">
+    <select name="ecological_focus" class="form-control" style="height: 45px;">
+        <option value="">Tous les focuses</option>
+        @foreach($ecologicalFocuses as $key => $value)
+            <option value="{{ $key }}" {{ request('ecological_focus') == $key ? 'selected' : '' }}>
+                {{ $value }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
+
+        <!-- Boutons -->
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Filtrer</button>
+            <a href="{{ route('campaigns.index') }}" class="btn btn-secondary">Réinitialiser</a>
+        </div>
+    </div>
+</form>
 
             <!-- CARD PRINCIPALE -->
             <div class="card">

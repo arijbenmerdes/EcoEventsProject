@@ -1,3 +1,6 @@
+<!-- Leaflet CSS -->
+ <!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <!-- Modal de création -->
 <div class="modal fade" id="createCampaignModal" tabindex="-1" role="dialog" aria-labelledby="createCampaignModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -108,8 +111,10 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+                            <!-- Carte interactive -->
                         </div>
                     </div>
+                            <div id="map" style="height: 300px; width:auto; margin-bottom: 15px;"></div>
 
                   <div class="form-group">
     <label for="create_targets">Cibles concernées *</label>
@@ -177,3 +182,39 @@
         </div>
     </div>
 </div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+
+var map = L.map('map').setView([36.8, 10.2], 6);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+var marker;
+
+function updateLocation(latlng) {
+    if(!marker) {
+        marker = L.marker(latlng, {draggable: true}).addTo(map);
+        marker.on('dragend', function(e) {
+            updateLocation(marker.getLatLng());
+        });
+    } else {
+        marker.setLatLng(latlng);
+    }
+
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latlng.lat}&lon=${latlng.lng}`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('create_location').value = data.display_name;
+        });
+}
+
+map.on('click', function(e) {
+    updateLocation(e.latlng);
+});
+</script>
+
+
+

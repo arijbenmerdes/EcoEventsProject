@@ -10,10 +10,41 @@ use Illuminate\Support\Facades\Auth;
 
 class CampaignController extends Controller
 {
-    public function index()
-    {
-         $campaigns = Campaign::with(['targets'])->withCount('targets')->get();
+  public function index(Request $request)
+{
+    // Crée la requête
+    $query = Campaign::with(['targets'])->withCount('targets');
 
+    // Filtre par recherche texte
+    if ($request->filled('search')) {
+        $search = $request->input('search');
+        $query->where(function($q) use ($search) {
+            $q->where('title', 'like', "%{$search}%")
+              ->orWhere('objective', 'like', "%{$search}%");
+        });
+    }
+
+    // Filtre par type
+    if ($request->filled('type')) {
+        $query->where('type', $request->input('type'));
+    }
+
+    // Filtre par focus écologique
+    if ($request->filled('ecological_focus')) {
+        $query->where('ecological_focus', $request->input('ecological_focus'));
+    }
+
+    // Filtre par statut
+    if ($request->filled('status')) {
+        $query->where('status', $request->input('status'));
+    }
+
+    // Pagination avec ordre, et appends pour conserver les filtres dans l’URL
+    $campaigns = $query->orderBy('start_date', 'desc')
+                       ->paginate(10)
+                       ->appends($request->all());
+
+    // Données pour les filtres
     $types = Campaign::getTypes();
     $ecologicalFocuses = Campaign::getEcologicalFocuses();
     $statuses = Campaign::getStatuses();
@@ -26,7 +57,9 @@ class CampaignController extends Controller
         'statuses',
         'targets'
     ));
-    }
+}
+
+
     public function frontcampaigns(Request $request)
     {
         $query = Campaign::with('targets')
