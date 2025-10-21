@@ -99,13 +99,13 @@ public function storeComment(StoreCommentRequest $request, Event $event)
 public function searchUserEvents(Request $request)
 {
     $query = $request->input('query', '');
-
     $events = empty($query)
         ? Event::all()
-        : Event::where('title', 'like', $query . '%')->get();
+        : Event::where('title', 'like', '%' . $query . '%')->get();
 
-    return view('user.events.partials.events_cards', compact('events'))->render();
+    return view('user.events.partials.events_cards', compact('events'));
 }
+
 
     public function update(Request $request)
     {

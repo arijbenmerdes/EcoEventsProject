@@ -9,7 +9,8 @@ use App\Http\Controllers\TargetController;
 use App\Models\Campaign;
 use App\Models\Target;
 
-
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\NewPasswordController;
 
 
 
@@ -52,6 +53,16 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 Route::get('/events/stats', [EventController::class, 'stats'])->name('events.stats');
 Route::get('/api/events', [EventController::class, 'getEvents']);
+Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
+    ->name('password.request');
+Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
+    ->name('password.email');
+
+// Réinitialisation du mot de passe
+Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
+    ->name('password.reset');
+Route::post('/reset-password', [NewPasswordController::class, 'store'])
+    ->name('password.update');
 //Route::get('/calendar', function () {
    // return view('calendar');
 //})->name('calendar'); // ← Ajout du nom ici
@@ -82,8 +93,8 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     // Routes événements utilisateur
     Route::get('/user/events', [UserController::class, 'index'])->name('user.events.index');
     Route::get('/user/events/{event}', [UserController::class, 'showEvent'])->name('user.events.show');
-    Route::get('/user/events/search', [UserController::class, 'searchUserEvents'])->name('user.events.search');
 Route::post('/user/events/{event}/comment', [UserController::class, 'storeComment'])->name('user.events.comment');
+Route::get('/user/events/search', [UserController::class, 'searchUserEvents'])->name('user.events.search');
 
 // Supprimer un commentaire
 Route::delete('/user/events/{event}/comment/{comment}', [UserController::class, 'destroyComment'])
@@ -122,7 +133,6 @@ Route::post('/experiences/{id}/generate-summary', [ExperienceController::class, 
 |--------------------------------------------------------------------------
 */
 Route::resource('events', EventController::class);
-Route::get('/events/search', [EventController::class, 'search'])->name('events.search');
 Route::post('/events/{event}/comment', [EventController::class, 'storeComment'])->name('events.comment');
 Route::get('/events/export/pdf', [EventController::class, 'exportPdf'])->name('events.export.pdf');
 Route::get('/events/export/excel', [EventController::class, 'exportExcel'])->name('events.export.excel');

@@ -67,6 +67,8 @@
 
         {{-- Ici le contenu spécifique de chaque page --}}
         @yield('content')
+         <script src="{{ asset('js/app.js') }}"></script>
+    @yield('scripts') 
     </div>
 
     <!-- Scripts -->

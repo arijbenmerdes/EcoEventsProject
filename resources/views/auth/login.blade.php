@@ -37,6 +37,8 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="{{ route('register') }}">Créer un compte</a>
                             <button type="submit" class="btn btn-primary">Se connecter</button>
+                            <a href="{{ route('password.request') }}">Mot de passe oublié ?</a>
+
                         </div>
                     </form>
                 </div>

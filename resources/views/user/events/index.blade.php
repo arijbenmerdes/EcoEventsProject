@@ -12,8 +12,9 @@
 
     <!-- Conteneur des cartes -->
     <div class="row" id="userEventsContainer">
-        @include('user.events.partials.events_cards', ['events' => $events])
-    </div>
+    @include('user.events.partials.events_cards', ['events' => $events])
+</div>
+
 </div>
 @endsection
 
@@ -25,11 +26,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     searchInput.addEventListener('keyup', function () {
         const query = this.value.trim();
-        fetch(`/user/events/search?query=${encodeURIComponent(query)}`)
+        console.log('Recherche :', query); // ← Ajoute ce log pour tester
+        fetch(`{{ route('user.events.search') }}?query=${encodeURIComponent(query)}`)
             .then(response => response.text())
-            .then(html => eventsContainer.innerHTML = html)
+            .then(html => {
+                eventsContainer.innerHTML = html;
+            })
             .catch(error => console.error('Erreur AJAX :', error));
     });
 });
 </script>
 @endsection
+
+
+
